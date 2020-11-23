@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/menu_curs"
+        android:title="Curs"
+        android:icon="@mipmap/ic_curs"/>
+
+    <item android:id="@+id/menu_perfil"
+        android:title="Perfil"
+        android:icon="@mipmap/ic_perfil"/>
+
+    <item android:id="@+id/menu_lliga"
+        android:title="Lliga"
+        android:icon="@mipmap/ic_lliga"/>
+
+    <item android:id="@+id/menu_botiga"
+        android:title="Botiga"
+        android:icon="@mipmap/ic_botiga"/>
+
+</menu>
