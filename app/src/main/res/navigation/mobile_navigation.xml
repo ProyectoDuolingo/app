@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_course">
+
+    <fragment
+        android:id="@+id/navigation_course"
+        android:name="com.example.app.ui.profile.ProfileFragment"
+        android:label="@string/title_course"
+        tools:layout="@layout/fragment_course" />
+
+    <fragment
+        android:id="@+id/navigation_league"
+        android:name="com.example.app.ui.course.CourseFragment"
+        android:label="@string/title_league"
+        tools:layout="@layout/fragment_league" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.app.ui.league.LeagueFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_shop"
+        android:name="com.example.app.ui.league.LeagueFragment"
+        android:label="@string/title_shop"
+        tools:layout="@layout/fragment_shop" />
+
+</navigation>
