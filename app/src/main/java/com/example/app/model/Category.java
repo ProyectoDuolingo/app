@@ -1,4 +1,4 @@
-package com.example.app;
+package com.example.app.model;
 
 import android.graphics.Bitmap;
 
@@ -8,9 +8,10 @@ public class Category {
 
     private Bitmap bitmap;
 
-    public Category(String name) {
+    public Category(String name, Bitmap bitmap) {
 
         this.name = name;
+        this.bitmap = bitmap;
 
     }
 
@@ -24,10 +25,6 @@ public class Category {
 
     public Bitmap getBitmap() {
         return bitmap;
-    }
-
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
     }
 
 }
