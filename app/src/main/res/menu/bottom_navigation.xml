@@ -4,21 +4,21 @@
     <item
         android:id="@+id/nav_course"
         android:icon="@drawable/ic_course_outline_bubble_chart_24dp"
-        android:title="Course" />
+        android:title="Curso" />
 
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_profile_outline_emoji_emotions_24dp"
-        android:title="Profile" />
+        android:title="Perfil" />
 
     <item
         android:id="@+id/nav_league"
         android:icon="@drawable/ic_league_outline_cup_24dp"
-        android:title="League" />
+        android:title="Liga" />
 
     <item
         android:id="@+id/nav_shop"
         android:icon="@drawable/ic_shop_outline_cart_24dp"
-        android:title="Shop" />
+        android:title="Tienda" />
 
 </menu>

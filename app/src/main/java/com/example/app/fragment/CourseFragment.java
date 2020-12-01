@@ -1,5 +1,6 @@
 package com.example.app.fragment;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import com.example.app.R;
 import com.example.app.model.Category;
 import com.example.app.model.Course;
 import com.example.app.util.RVAdapterCategory;
+import com.example.app.util.RVAdapterCourse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +33,7 @@ public class CourseFragment extends Fragment {
     private RecyclerView rvCategories;
     private RVAdapterCategory rvCategoryAdapter;
 
-    Course currentCourse;
-
-    List<Category> categoriesList = new ArrayList<Category>();
+    Menu toolbar;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -51,7 +51,9 @@ public class CourseFragment extends Fragment {
 
         inflater.inflate(R.menu.toolbar_course, menu);
 
-        menu.getItem(0).setIcon(player.getCoursesList().get(currentCourseIndex).getCodeFlagLang1());
+        toolbar = menu;
+
+        toolbar.getItem(0).setIcon(player.getCurrentCourse().getCodeFlagLang1());
 
         super.onCreateOptionsMenu(menu, inflater);
 
@@ -60,29 +62,13 @@ public class CourseFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == R.id.currentCourseFlag) {
+        CourseManagerFragment cmf = new CourseManagerFragment();
 
-            if (currentCourseIndex == 3) {
+        cmf.show(getActivity().getSupportFragmentManager(), "cmf_tag");
 
-                currentCourseIndex = 0;
+        updateRVCategories();
 
-            } else {
-
-                currentCourseIndex++;
-
-            }
-
-            item.setIcon(player.getCoursesList().get(currentCourseIndex).getCodeFlagLang1());
-
-            currentCourse = player.getCoursesList().get(currentCourseIndex);
-
-            System.out.println("Current course = " + currentCourseIndex + " categories = " + currentCourse.getCategoriesList().size());
-
-            updateRV();
-
-        }
-
-        return false;
+        return true;
 
     }
 
@@ -94,43 +80,15 @@ public class CourseFragment extends Fragment {
 
         rvCategories.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
-        currentCourse = player.getCoursesList().get(currentCourseIndex);
-
-        categoriesList.addAll(currentCourse.getCategoriesList());
-
-        rvCategoryAdapter = new RVAdapterCategory(this.getActivity(), categoriesList);
-
-        rvCategoryAdapter.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(getActivity(), "Category " + categoriesList.get(rvCategories.getChildAdapterPosition(v)).getName() + " played." , Toast.LENGTH_SHORT).show();
-
-            }
-        });
+        rvCategoryAdapter = new RVAdapterCategory(this.getActivity(), player.getCurrentCourse().getCategoriesList());
 
         rvCategories.setAdapter(rvCategoryAdapter);
 
     }
 
-    public void updateRV() {
+    public void updateRVCategories() {
 
-        categoriesList.clear();
-
-        System.out.println("Updating Categories SIZE = " + categoriesList.size());
-
-        for (int i = 0; i < currentCourse.getCategoriesList().size(); i++) {
-
-            System.out.println("Adding Category " + i + " with name = " + currentCourse.getCategoriesList().get(i).getName());
-
-            categoriesList.add(currentCourse.getCategoriesList().get(i));
-
-        }
-
-        System.out.println("Updated Categories SIZE = " + categoriesList.size());
-
-        rvCategoryAdapter.updateData(categoriesList);
+        rvCategoryAdapter.notifyDataSetChanged();
 
     }
 

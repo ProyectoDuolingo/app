@@ -26,8 +26,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNav;
 
     public static Player player;
-
-    public static int currentCourseIndex = 0;
+    public static List<Course> availableCourses;
 
     List<Category> categoriesList;
 
@@ -103,7 +102,9 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        Course c1 = new Course(R.drawable.flag_fr, R.drawable.flag_pt, courseCategories);
+        Course c1 = new Course(R.drawable.flag_fr, R.drawable.flag_pt);
+
+        c1.addCategories(courseCategories);
 
         courseCategories = new ArrayList<Category>();
 
@@ -117,7 +118,9 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        Course c2 = new Course(R.drawable.flag_pt, R.drawable.flag_ru, courseCategories);
+        Course c2 = new Course(R.drawable.flag_pt, R.drawable.flag_ru);
+
+        c2.addCategories(courseCategories);
 
         courseCategories = new ArrayList<Category>();
 
@@ -131,7 +134,9 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        Course c3 = new Course(R.drawable.flag_ru, R.drawable.flag_se, courseCategories);
+        Course c3 = new Course(R.drawable.flag_ru, R.drawable.flag_se);
+
+        c3.addCategories(courseCategories);
 
         courseCategories = new ArrayList<Category>();
 
@@ -145,18 +150,18 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        Course c4 = new Course(R.drawable.flag_se, R.drawable.flag_fr, courseCategories);
+        Course c4 = new Course(R.drawable.flag_se, R.drawable.flag_fr);
 
-        courseCategories = new ArrayList<Category>();
+        c4.addCategories(courseCategories);
 
-        List<Course> coursesList = new ArrayList<Course>();
+        availableCourses = new ArrayList<Course>();
 
-        coursesList.add(c1);
-        coursesList.add(c2);
-        coursesList.add(c3);
-        coursesList.add(c4);
+        availableCourses.add(c2);
+        availableCourses.add(c3);
+        availableCourses.add(c4);
 
-        player.setCoursesList(coursesList);
+        player.addCourse(c1);
+        player.setCurrentCourse(c1);
 
     }
 

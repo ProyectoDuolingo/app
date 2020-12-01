@@ -1,7 +1,6 @@
 package com.example.app.util;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +38,7 @@ public class RVAdapterCategory extends RecyclerView.Adapter<RVAdapterCategory.Vi
 
         private ConstraintLayout categoryItem;
         public TextView textViewRVCategory;
+        public TextView textViewRVCategoryLevel;
         public ImageView imageViewRVCategory;
 
         public ViewHolder(View itemView) {
@@ -47,6 +47,7 @@ public class RVAdapterCategory extends RecyclerView.Adapter<RVAdapterCategory.Vi
 
             this.categoryItem = itemView.findViewById(R.id.categoryItem);
             this.textViewRVCategory = itemView.findViewById(R.id.textViewCategory);
+            this.textViewRVCategoryLevel = itemView.findViewById(R.id.textViewCategoryLevel);
             this.imageViewRVCategory = itemView.findViewById(R.id.imageViewCategory);
 
         }
@@ -54,9 +55,8 @@ public class RVAdapterCategory extends RecyclerView.Adapter<RVAdapterCategory.Vi
         public void setData(Category categoryData) {
 
             this.textViewRVCategory.setText(categoryData.getName());
+            this.textViewRVCategoryLevel.setText(String.valueOf(categoryData.getCurrentLevel()));
             this.imageViewRVCategory.setImageResource(R.drawable.category_sample);
-
-//            this.imageViewRVCategory.setImageBitmap(categoryData.getBitmap());
 
         }
 
@@ -75,14 +75,39 @@ public class RVAdapterCategory extends RecyclerView.Adapter<RVAdapterCategory.Vi
             @Override
             public void onClick(View v) {
 
-                int categoryCoins = (int) (Math.random() * 25) + 25;
+                int currentLevel = categoriesList.get(viewHolder.getAdapterPosition()).getCurrentLevel();
 
-                int categoryXp = (int) (Math.random() * 20) + 5;
+                if (categoriesList.get(viewHolder.getAdapterPosition()).isCompleted()) {
 
-                player.setCoins(player.getCoins() + categoryCoins);
-                player.setXpPoints(player.getXpPoints() + categoryXp);
+                    Toast.makeText(context, "Categoría " + categoriesList.get(viewHolder.getAdapterPosition()).getName() + " ya ha sido completada.", Toast.LENGTH_LONG).show();
 
-                Toast.makeText(context, "Category " + categoriesList.get(viewHolder.getAdapterPosition()).getName() + " played. You won " + categoryCoins + " coins and " + categoryXp + " XP Points.", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    int categoryCoins = (int) (Math.random() * 25) + 25 * currentLevel;
+                    int categoryXp = (int) (Math.random() * 20) + 5 * currentLevel;
+
+                    player.setCoins(player.getCoins() + categoryCoins);
+                    player.setXpPoints(player.getXpPoints() + categoryXp);
+
+                    if (currentLevel < 5) {
+
+                        Toast.makeText(context, "Categoría " + categoriesList.get(viewHolder.getAdapterPosition()).getName() + ". Nivel " +  currentLevel + " completado. Has ganado " + categoryCoins + " monedas y " + categoryXp + " puntos de experiencia.", Toast.LENGTH_LONG).show();
+
+                        player.getCurrentCourse().getCategoriesList().get(viewHolder.getAdapterPosition()).setCurrentLevel(currentLevel + 1);
+                        categoriesList.get(viewHolder.getAdapterPosition()).setCurrentLevel(currentLevel + 1);
+
+                    } else {
+
+                        player.getCurrentCourse().getCategoriesList().get(viewHolder.getAdapterPosition()).setCompleted(true);
+                        categoriesList.get(viewHolder.getAdapterPosition()).setCompleted(true);
+
+                        Toast.makeText(context, "Categoría " + categoriesList.get(viewHolder.getAdapterPosition()).getName() + ". Nivel " +  currentLevel + " completado. ¡Has completado esta categoria! Has ganado " + categoryCoins + " monedas y " + categoryXp + " puntos de experiencia.", Toast.LENGTH_LONG).show();
+
+                    }
+
+                    notifyDataSetChanged();
+
+                }
 
             }
         });
@@ -123,7 +148,7 @@ public class RVAdapterCategory extends RecyclerView.Adapter<RVAdapterCategory.Vi
 
     public void updateData(List<Category> newCategoriesList) {
 
-        DiffUtilCallback diffUtilCallback = new DiffUtilCallback(this.categoriesList, newCategoriesList);
+        DiffUtilCallbackCategory diffUtilCallback = new DiffUtilCallbackCategory(this.categoriesList, newCategoriesList);
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtilCallback);
 
         this.categoriesList.clear();

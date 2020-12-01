@@ -9,6 +9,8 @@ public class Player {
 
     List<Course> coursesList;
 
+    Course currentCourse;
+
     private int coins;
     private int xpPoints;
 
@@ -41,6 +43,14 @@ public class Player {
 
     public void setCoursesList(List<Course> coursesList) {
         this.coursesList = coursesList;
+    }
+
+    public Course getCurrentCourse() {
+        return currentCourse;
+    }
+
+    public void setCurrentCourse(Course currentCourse) {
+        this.currentCourse = currentCourse;
     }
 
     public int getCoins() {

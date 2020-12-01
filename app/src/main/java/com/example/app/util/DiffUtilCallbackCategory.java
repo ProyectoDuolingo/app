@@ -4,12 +4,12 @@ import com.example.app.model.Category;
 
 import java.util.List;
 
-public class DiffUtilCallback extends androidx.recyclerview.widget.DiffUtil.Callback {
+public class DiffUtilCallbackCategory extends androidx.recyclerview.widget.DiffUtil.Callback {
 
     private List<Category> oldList;
     private List<Category> newList;
 
-    public DiffUtilCallback(List<Category> oldList, List<Category> newList) {
+    public DiffUtilCallbackCategory(List<Category> oldList, List<Category> newList) {
 
         this.oldList = oldList;
         this.newList = newList;
