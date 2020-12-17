@@ -50,4 +50,5 @@ public class Category {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+
 }
